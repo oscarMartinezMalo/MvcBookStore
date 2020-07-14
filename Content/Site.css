@@ -1,12 +1,14 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿:root {
+    --primary-color: #d88e00;
+}
+
+body {
+    height: 100vh;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    height: 100%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -16,9 +18,71 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+/*Input Error*/
+span.field-validation-error, label.error {
+    color: red;
+}
+
+.input-validation-error, input.error {
+    border: 1px solid red;
+}
+
+/* NavBar */
+.navbar-inverse {
+    background-color: transparent;
+    border: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+color: var(--primary-color);
+font-size: 20px;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #f19e00;
+}
+
+.container-fluid.body-content, .navbar > .container-fluid {
+    margin: 0 15% 0 15%;
+}
+
+a.navbar-brand {
+    padding-left: 0px;
+}
+
+.logo, .logo > img {
+    width: 50px;
+}
+
+.navbar-header {
+    padding-top: 3px;
+}
+
+.navbar-toggle {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+
+/*Media Queries*/
+@media only screen and (max-width: 767px) {
+    .navbar-collapse.in, .navbar-inverse .navbar-nav > li > a {
+        background-color: #fff6e4;
+    }
+
+    .navbar-nav {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+
+    .container-fluid.body-content, .navbar > .container-fluid {
+        margin: 0 5% 0 5%;
+    }
+
+    .hero-image {
+        margin-left: -5vw !important;
+    }
 }
