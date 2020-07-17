@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcBookStore.Models
@@ -64,6 +65,10 @@ namespace MvcBookStore.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Phone Number")]
+        public string Phone { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

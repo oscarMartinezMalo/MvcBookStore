@@ -6,19 +6,14 @@ body {
     height: 100vh;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     height: 100%;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/*Input Error*/
 span.field-validation-error, label.error {
     color: red;
 }
@@ -27,20 +22,19 @@ span.field-validation-error, label.error {
     border: 1px solid red;
 }
 
-/* NavBar */
 .navbar-inverse {
     background-color: transparent;
     border: none;
 }
 
-.navbar-inverse .navbar-nav > li > a {
-color: var(--primary-color);
-font-size: 20px;
-}
+    .navbar-inverse .navbar-nav > li > a {
+        color: var(--primary-color);
+        font-size: 20px;
+    }
 
-.navbar-inverse .navbar-nav > li > a:hover {
-    color: #f19e00;
-}
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: #f19e00;
+        }
 
 .container-fluid.body-content, .navbar > .container-fluid {
     margin: 0 15% 0 15%;
@@ -63,6 +57,102 @@ a.navbar-brand {
     border: none;
 }
 
+.main-contain {
+    padding: 60px 0 0 0;
+}
+
+h2.title {
+    text-align: center;
+    margin: 40px 0px;
+    color: var(--primary-color);
+}
+
+.btn.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    margin: 20px 0 20px 0;
+}
+
+.btn-default {
+    margin-top: 20px;
+}
+
+input.btn.btn-default {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.form-card {
+    margin-bottom: 15px;
+    max-width: 400px;
+    margin: auto;
+}
+
+span.twitter-typeahead {
+    width: 100%;
+}
+
+input, select, textarea {
+    max-width: none;
+}
+/*Table Style*/
+
+table#customers, .table-bordered {
+    border: none;
+}
+
+table td, table th {
+    border-left: none !important;
+}
+
+.table-bordered > td, .table-bordered > tbody > tr > td,
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+    border-right: 0px;
+}
+
+thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+table.dataTable thead .sorting:after {
+    opacity: 1;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/** End Table Style*/
+
+.book-card {
+    max-width: 400px;
+    margin: auto;
+}
+
+.alert.alert-warning.book-card {
+    margin-top: 40px;
+}
+
+.book-card .title {
+    text-align: left;
+    margin-top: 0px;
+}
+
+.books-container {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+span.glyphicon.glyphicon-trash {
+    float: right;
+}
+
+span.glyphicon.glyphicon-trash:hover {
+    cursor: pointer;
+}
 
 /*Media Queries*/
 @media only screen and (max-width: 767px) {

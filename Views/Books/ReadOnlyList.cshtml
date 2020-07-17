@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MvcBookStore.Models.Book>
+
+@{
+    ViewBag.Title = "ReadOnlyList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="title"> Book </h2>
+
+@if (!Model.Any())
+{
+    <p>We don't have any book yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+            <tr>
+                <td>@book.Name</td>
+                <td>@book.Genre.Name</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
