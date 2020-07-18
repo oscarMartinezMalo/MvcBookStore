@@ -1,19 +1,19 @@
 ﻿@using MvcBookStore.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Log In";
 }
 
 <h2 class="title">@ViewBag.Title</h2>
-<div class="row">
+<div>
     <div>
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-card", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>For testing purposes use this</h4>
-                <p>user: admin@gmail.com</p>
-                <p>password: Bookstore123.</p>
+                <h4 class="text-center">For testing purposes use this</h4>
+                <p class="text-center">user: admin@gmail.com</p>
+                <p class="text-center">password: Bookstore123.</p>
                         <hr />
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
@@ -33,19 +33,20 @@
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.CheckBoxFor(m => m.RememberMe, new { @style = "margin-left: 0px" })
                                     @Html.LabelFor(m => m.RememberMe)
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
+                            <div class="col-md-offset-2 col-md-10 mb-1" style="margin-bottom: 10px;">
                                 <input type="submit" value="Log in" class="btn btn-default" />
                             </div>
+                            <p>
+                                @Html.ActionLink("Register as a new user", "Register", null, new { @class = "col-md-offset-2 col-md-10" })
+                            </p>
                         </div>
-                        <p>
-                            @Html.ActionLink("Register as a new user", "Register")
-                        </p>
+
                         @* Enable this once you have account confirmation enabled for password reset functionality
                     <p>
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")

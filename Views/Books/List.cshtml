@@ -19,17 +19,19 @@ else
             <tr>
                 <th>Book</th>
                 <th>Genre</th>
+                <th>Availables</th>
                 <th>Edit</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var book in Model)
             {
-                <tr>
-                    <td>@Html.ActionLink(book.Name, "Details", "Books", new { id = book.Id }, null)</td>
-                    <td>@book.Genre.Name</td>
-                    <td>@Html.ActionLink("Edit Link", "Edit", "Books", new { id = book.Id }, null)</td>
-                </tr>
+            <tr>
+                <td>@Html.ActionLink(book.Name, "Details", "Books", new { id = book.Id }, new { @style = "text-decoration: underline" })</td>
+                <td>@book.Genre.Name</td>
+                <td>@book.NumberAvailable</td>
+                <td>@Html.ActionLink("Edit Link", "Edit", "Books", new { id = book.Id }, new { @style = "text-decoration: underline" })</td>
+            </tr>
             }
         </tbody>
     </table>

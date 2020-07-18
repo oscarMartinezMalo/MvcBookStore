@@ -33,7 +33,7 @@
                     {
                         data: "name",
                         render: function(data, type, customer) {
-                            return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
+                            return "<a href='/customers/edit/" + customer.id + "'style='text-decoration: underline;'>" + customer.name + "</a>";
                         }
                     },
                     {
@@ -45,13 +45,13 @@
                     {
                         data: "name",
                         render: function (data, type, customer) {
-                            return "<a href='/customers/edit/" + customer.id + "'>" + "Edit" + "</a>";
+                            return "<a href='/customers/edit/" + customer.id + "'style='text-decoration: underline;'>" + "Edit" + "</a>";
                         }
                     },
                     {
                         data: "id",
                         render: function (data) {
-                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + " style='text-decoration: underline;'>Delete</button>";
                         }
                     }
                 ]

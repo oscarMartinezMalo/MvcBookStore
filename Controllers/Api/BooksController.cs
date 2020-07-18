@@ -20,7 +20,7 @@ namespace MvcBookStore.Controllers.Api
 
         public IEnumerable<BookDto> GetBooks(string query = null)
         {
-            var booksQuery = _context.Books
+             var booksQuery = _context.Books
                 .Include(m => m.Genre)
                 .Where(m => m.NumberAvailable > 0);
 
