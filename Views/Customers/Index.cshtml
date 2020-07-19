@@ -6,7 +6,7 @@
 <h2 class="title">Customers</h2>
 
 @Html.ActionLink("New Customer", "New", "Customers", null, new { @class = "btn btn-primary" })
-<table class="table table-bordered table-hover" id="customers">
+<table class="table table-bordered table-hover table-customer" id="customers">
     <thead>
         <tr>
             <th>Customer</th>
@@ -24,7 +24,8 @@
 {
     <script>
         $(document).ready(() => {
-           let table = $("#customers").DataTable({
+            let table = $("#customers").DataTable({
+                pagingType: "numbers",
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""

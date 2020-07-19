@@ -22,7 +22,7 @@ namespace MvcBookStore.Models
         public DateTime ReleaseDate { get; set; }
 
         [Display(Name = "Number in Stock")]
-        [Range(1, 20)]
+        [Range(1, 100)]
         public byte NumberInStock { get; set; }
 
         public byte NumberAvailable { get; set; }

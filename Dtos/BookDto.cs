@@ -20,7 +20,7 @@ namespace MvcBookStore.Dtos
 
         public DateTime ReleaseDate { get; set; }
 
-        [Range(1, 20)]
+        [Range(1, 100)]
         public byte NumberInStock { get; set; }
     }
 }

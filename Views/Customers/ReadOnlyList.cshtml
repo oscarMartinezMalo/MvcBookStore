@@ -6,7 +6,7 @@
 
 <h2 class="title">Customers</h2>
 
-<table class="table table-bordered table-hover" id="customers">
+<table  data-order='[[ 1, "asc" ]]' pagingType='full' data-page-length='15' class="table table-bordered table-hover table-customer-readonly" id="customers">
     <thead>
         <tr>
             <th>Customer</th>
@@ -22,8 +22,9 @@
 @section scripts
 {
     <script>
-        $(document).ready(() => {           
-           let table = $("#customers").DataTable({
+        $(document).ready(() => {         
+            let table = $("#customers").DataTable({
+                pagingType: "numbers",
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""

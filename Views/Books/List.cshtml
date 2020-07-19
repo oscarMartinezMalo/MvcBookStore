@@ -7,14 +7,15 @@
 
 <h2 class="title"> Books </h2>
 
+@Html.ActionLink("New Book", "New", "Books", null, new { @class = "btn btn-primary" })
+
 @if (!Model.Any())
 {
     <p>We don't have any book yet.</p>
 }
 else
 {
-    @Html.ActionLink("New Book", "New", "Books", null, new { @class = "btn btn-primary" })
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover table-book">
         <thead>
             <tr>
                 <th>Book</th>
@@ -26,12 +27,12 @@ else
         <tbody>
             @foreach (var book in Model)
             {
-            <tr>
-                <td>@Html.ActionLink(book.Name, "Details", "Books", new { id = book.Id }, new { @style = "text-decoration: underline" })</td>
-                <td>@book.Genre.Name</td>
-                <td>@book.NumberAvailable</td>
-                <td>@Html.ActionLink("Edit Link", "Edit", "Books", new { id = book.Id }, new { @style = "text-decoration: underline" })</td>
-            </tr>
+                <tr>
+                    <td>@Html.ActionLink(book.Name, "Details", "Books", new { id = book.Id }, new { @style = "text-decoration: underline" })</td>
+                    <td>@book.Genre.Name</td>
+                    <td>@book.NumberAvailable</td>
+                    <td>@Html.ActionLink("Edit Link", "Edit", "Books", new { id = book.Id }, new { @style = "text-decoration: underline" })</td>
+                </tr>
             }
         </tbody>
     </table>
