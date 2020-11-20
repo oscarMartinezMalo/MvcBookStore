@@ -1,7 +1,7 @@
 ﻿using MvcBookStore.Models;
+using MvcBookStore.Persistence;
 using MvcBookStore.ViewModels;
 using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -9,22 +9,26 @@ namespace MvcBookStore.Controllers
 {
     public class BooksController : Controller
     {
-        private ApplicationDbContext _context;
+        //private ApplicationDbContext _context;
+        public readonly IUnitOfWork _unitOfWork;
 
-        public BooksController()
+        public BooksController(IUnitOfWork unitOfWork)
+        //public BooksController()
         {
-            _context = new ApplicationDbContext();
+            //_context = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            _context.Dispose();
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    _context.Dispose();
+        //}
 
         [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult New()
         {
-            var genres = _context.Genres.ToList();
+            //var genres = _context.Genres.ToList();
+            var genres = _unitOfWork.Genres.GetGenres();
             var viewModel = new BookFormViewModel
             {
                 Genres = genres
@@ -36,14 +40,16 @@ namespace MvcBookStore.Controllers
         [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult Edit(int id)
         {
-            var books = _context.Books.SingleOrDefault(c => c.Id == id);
+            //var books = _context.Books.SingleOrDefault(c => c.Id == id);
+            var book = _unitOfWork.Books.Get(id);
 
-            if (books == null)
+            if (book == null)
                 return HttpNotFound();
 
-            var viewModel = new BookFormViewModel(books)
+            var viewModel = new BookFormViewModel(book)
             {
-                Genres = _context.Genres.ToList()
+                //Genres = _context.Genres.ToList()
+                Genres = _unitOfWork.Genres.GetGenres()
             };
 
             return View("New", viewModel);
@@ -57,7 +63,8 @@ namespace MvcBookStore.Controllers
             {
                 BookFormViewModel viewModel = new BookFormViewModel(book)
                 {
-                    Genres = _context.Genres.ToList()
+                    //Genres = _context.Genres.ToList()
+                    Genres = _unitOfWork.Genres.GetGenres()
                 };
                 return View("New", viewModel);
             }
@@ -66,25 +73,29 @@ namespace MvcBookStore.Controllers
             {
                 book.DateAdded = DateTime.Now;
                 book.NumberAvailable = book.NumberInStock;
-                _context.Books.Add(book);
+                //_context.Books.Add(book);
+                _unitOfWork.Books.Add(book);
             }
             else
             {
-                var bookInDb = _context.Books.Single(m => m.Id == book.Id);
+                var bookInDb = _unitOfWork.Books.Get(book.Id);
+                //var bookInDb = _context.Books.Single(m => m.Id == book.Id);
                 bookInDb.Name = book.Name;
                 bookInDb.GenreId = book.GenreId;
                 bookInDb.NumberInStock = book.NumberInStock;
                 bookInDb.ReleaseDate = book.ReleaseDate;
             }
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
+            //_context.SaveChanges();
             return RedirectToAction("Index", "Books");
         }
 
         public ViewResult Index()
         {
-            var books = _context.Books.Include(m => m.Genre).ToList();
-            //var books = GetBooks();
+
+            var books = _unitOfWork.Books.GetBooksWithGenres().ToList();
+            //var books = _context.Books.Include(m => m.Genre).ToList();
             if (User.IsInRole(RoleName.CanManageBooks))
                 return View("List", books);
 
@@ -94,7 +105,8 @@ namespace MvcBookStore.Controllers
 
         public ActionResult Details(int id)
         {
-            var oneBook = _context.Books.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+            var oneBook = _unitOfWork.Books.GetBookWithGenres(id);
+            //var oneBook = _context.Books.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
 
             if (oneBook == null)
                 return HttpNotFound();

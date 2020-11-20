@@ -20,18 +20,18 @@ namespace MvcBookStore.Controllers.Api
 
         public IEnumerable<BookDto> GetBooks(string query = null)
         {
-             var booksQuery = _context.Books
-                .Include(m => m.Genre)
-                .Where(m => m.NumberAvailable > 0);
+            var booksQuery = _context.Books
+               .Include(m => m.Genre)
+               .Where(m => m.NumberAvailable > 0);
 
             if (!String.IsNullOrWhiteSpace(query))
                 booksQuery = booksQuery.Where(m => m.Name.Contains(query));
 
             var s = booksQuery.ToList();
 
-           return booksQuery
-                .ToList()
-                .Select(Mapper.Map<Book, BookDto>);
+            return booksQuery
+                 .ToList()
+                 .Select(Mapper.Map<Book, BookDto>);
         }
     }
 }

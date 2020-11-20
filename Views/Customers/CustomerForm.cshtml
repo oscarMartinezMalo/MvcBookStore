@@ -1,44 +1,108 @@
-﻿
-@model MvcBookStore.ViewModels.CustomerFormViewModel
+﻿@*<link href="~/Content/contextMenu.css" rel="stylesheet" />*@
+    @using Microsoft.AspNet.Identity
+    @model MvcBookStore.ViewModels.CustomerFormViewModel
 
-@{
-    ViewBag.Title = "New";
+    @{
+        ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    }
 
-<h2 class="title">New Customer</h2>
 
-@using (Html.BeginForm("Save", "Customers", FormMethod.Post, new { @class = "form-card" }))
+    <h2 class="title">New Customer</h2>
+
+    @using (Html.BeginForm("Save", "Customers", FormMethod.Post, new { @class = "form-card" }))
+    {
+        //@Html.ValidationSummary()   Show all the errors on top of the form
+        @Html.ValidationSummary(true, "Please fix the following errors")
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.Name, new { @class = "menu", toggle = "tooltip", title = "Right Click to History" })
+            @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.MembershipTypeId)
+            @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new MultiSelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.BirthDate)
+            @*<label for="Birthdate"> Date of Birth</label>*@
+            @Html.TextBoxFor(m => m.Customer.BirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.BirthDate)
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsLetter) Subscribe to Newsletter
+            </label>
+        </div>
+        @Html.HiddenFor(m => m.Customer.Id)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Save</button>
+    }
+
+    <ul class='custom-menu'>
+        <li data-action="first">Show History</li>
+        @*<li data-action="second">Second thing</li>
+        <li data-action="third">Third thing</li>*@
+    </ul>
+
+    @* Enabling Client Side Validation*@
+    @section scripts
 {
-    //@Html.ValidationSummary()   Show all the errors on top of the form
-    @Html.ValidationSummary(true, "Please fix the following errors")
-    <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Name)
-        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Customer.Name)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Customer.MembershipTypeId)
-        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new MultiSelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
-    </div>
-    <div class="form-group">
-        @*@Html.LabelFor(m => m.BirthDate)*@
-        <label for="Birthdate"> Date of Birth</label>
-        @Html.TextBoxFor(m => m.Customer.BirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Customer.BirthDate)
-    </div>
-    <div class="checkbox">
-        <label>
-            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsLetter) Subscribe to Newsletter
-        </label>
-    </div>
-    @Html.HiddenFor(m => m.Customer.Id)
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Save</button>
-}
-@* Enabling Client Side Validation*@
-@section scripts
-{
-    @Scripts.Render("~/bundles/jqueryval");
-}
+        @Scripts.Render("~/bundles/jqueryval");
+
+<script>
+    $(document).ready(function () {
+        $('[toggle="tooltip"]').tooltip();
+    });
+    //$(document).ready(function () {
+    $(".form-group>label").contextmenu(function () {
+        let fieldClicked = $(this).attr('for').split("_")[1];
+        console.log("History", fieldClicked);
+        let userName = "@User.Identity.Name";
+        let userId = "@User.Identity.GetUserId()";
+        //let customerId = @ViewContext
+
+        console.log("UserName", userName);
+        console.log("UserId", userId);
+        //console.log("CustomerId",)
+
+        //$(document).bind("contextmenu", function (event) {
+        // Avoid the real one
+        event.preventDefault();
+
+        // Show contextmenu In the right position (the mouse)
+        $(".custom-menu").finish().toggle(100).css({top: event.pageY + "px", left: event.pageX + "px"});
+    });
+
+    // If the document is clicked somewhere
+    $(document).bind("mousedown", function (e) {
+        // If the clicked element is not the menu
+        if (!$(e.target).parents(".custom-menu").length > 0) {
+            // Hide it
+            $(".custom-menu").hide(100);
+        }
+    });
+
+
+    // If the menu element is clicked
+    $(".custom-menu li").click(function () {
+        // This is the triggered action name
+        switch ($(this).attr("data-action")) {
+            // A case for each action. Your actions here
+            case "first": showHistory(); break;
+            case "second": alert("second"); break;
+            case "third": alert("third"); break;
+        }
+
+        // Hide it AFTER the action was triggered
+        $(".custom-menu").hide(100);
+    });
+
+    function showHistory() {
+        alert('Show History');
+    }
+</script>
+    }
+
+

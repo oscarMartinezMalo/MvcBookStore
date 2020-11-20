@@ -31,7 +31,8 @@ namespace MvcBookStore
                       "~/content/datatables/css/datatables.bootstrap.css",
                       "~/Content/typeahead.css",
                       "~/Content/toastr.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/contextMenu.css"));
         }
     }
 }
